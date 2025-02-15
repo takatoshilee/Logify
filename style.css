@@ -54,15 +54,14 @@ body {
     font-weight: 400;
     margin: 50px 0px 0px 45px;
     color: #744C4C;
-    line-height: 55px;
+    line-height: 1.5;
     padding-bottom: 0px;
     box-sizing: border-box; /* Include padding in width calculation */
-    letter-spacing: -2px;
 }
 
 .menu_icons {
     position: absolute;
-    top: 167px;
+    top: 200px;
     right: 25px;
     display: flex;
     align-items: center;
@@ -101,8 +100,8 @@ cursor: pointer;
     position: relative;
     overflow-x: scroll;
     height: 400px;
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
 }
 
 .journal-entry {
@@ -163,7 +162,7 @@ cursor: pointer;
 
 .add-button {
     position: absolute;
-    bottom: 25px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
