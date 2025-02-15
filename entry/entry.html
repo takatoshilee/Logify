@@ -30,34 +30,16 @@
         <button class="btn" id="rephraseBtn">Rephrase this better</button>
       </div>
       <div id="feedbackContainer"></div>
-<<<<<<< Updated upstream
-=======
-      <div class="button-row">
-        <button class="btn" id="saveEntryBtn">Save Entry</button>
-      </div>
-
-      <p>test</p>
-      <!-- Modal for entering OpenAI and Spotify credentials -->
-      <div id="apiKeyModal">
-        <div id="apiKeyModalContent">
-          <h3>Enter your OpenAI API Key</h3>
-          <input type="password" id="apiKeyInput" placeholder="sk-..." />
-          <button id="saveApiKeyBtn">Save OpenAI API Key</button>
-
-          <h3>Enter your Spotify Client ID</h3>
-          <input type="text" id="spotifyClientId" placeholder="Spotify Client ID" />
-          <h3>Enter your Spotify Client Secret</h3>
-          <input type="password" id="spotifyClientSecret" placeholder="Spotify Client Secret" />
-          <button id="saveSpotifyBtn">Save Spotify Credentials</button>
-          
-          <!-- New Button for Spotify Login -->
-          <h3>Login to Spotify</h3>
-          <button id="spotifyLoginBtn">Log in with Spotify</button>
-        </div>
-      </div>
->>>>>>> Stashed changes
     </div>
   </div>
+
+  <div id="spotifyLoginModal" class="modal">
+    <div class="modal-content">
+      <h2>Please log in to Spotify</h2>
+      <button id="spotifyLoginBtn">Log in to Spotify</button>
+    </div>
+  </div>
+
 
   <input type="file" id="fileInput" accept="image/*,.pdf,.doc,.docx" />
 
