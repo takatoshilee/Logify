@@ -1,14 +1,11 @@
+// === API Key Modal & OpenAI functions (unchanged) ===
 const apiKeyModal = document.getElementById("apiKeyModal");
 const apiKeyInput = document.getElementById("apiKeyInput");
 const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
 
 function checkApiKey() {
   const key = localStorage.getItem("openai_api_key");
-  if (!key) {
-    apiKeyModal.style.display = "flex";
-  } else {
-    apiKeyModal.style.display = "none";
-  }
+  apiKeyModal.style.display = key ? "none" : "flex";
 }
 
 saveApiKeyBtn.addEventListener("click", () => {
@@ -44,7 +41,6 @@ async function callOpenAI(messages) {
       }),
     });
     const data = await response.json();
-    // Extract the assistant's message from the response
     const content = data.choices?.[0]?.message?.content || "";
     return content;
   } catch (error) {
@@ -53,14 +49,12 @@ async function callOpenAI(messages) {
   }
 }
 
+// === Date & Attachment Handling ===
 const dateField = document.getElementById("dateField");
 const attachmentIcon = document.getElementById("attachmentIcon");
 const fileInput = document.getElementById("fileInput");
 const attachmentPreview = document.getElementById("attachmentPreview");
 const journalText = document.getElementById("journalText");
-const feedbackBtn = document.getElementById("feedbackBtn");
-const rephraseBtn = document.getElementById("rephraseBtn");
-const feedbackContainer = document.getElementById("feedbackContainer");
 
 function setCurrentDate() {
   const now = new Date();
@@ -104,11 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// --------------------------
-// AI Buttons
-// --------------------------
+// === AI Feedback & Rephrase Buttons (unchanged) ===
+const feedbackBtn = document.getElementById("feedbackBtn");
+const rephraseBtn = document.getElementById("rephraseBtn");
+const feedbackContainer = document.getElementById("feedbackContainer");
 
-// Finish with feedback button
 feedbackBtn.addEventListener("click", async () => {
   const text = journalText.value.trim();
   if (!text) {
@@ -149,7 +143,6 @@ feedbackBtn.addEventListener("click", async () => {
   `;
 });
 
-// Rephrase button
 rephraseBtn.addEventListener("click", async () => {
   const text = journalText.value.trim();
   if (!text) {
@@ -187,4 +180,35 @@ rephraseBtn.addEventListener("click", async () => {
       <p>${rephraseObj.rephrased}</p>
     </div>
   `;
+});
+
+// === NEW: Save Entry to Local Storage ===
+const saveEntryBtn = document.getElementById("saveEntryBtn");
+
+saveEntryBtn.addEventListener("click", () => {
+  const text = journalText.value.trim();
+  if (!text) {
+    alert("Please write something before saving.");
+    return;
+  }
+
+  // Create an entry object with standardized fields
+  const now = new Date();
+  const entryDate = now.toISOString().split("T")[0]; // YYYY-MM-DD
+  const newEntry = {
+    id: Date.now(),  // unique id
+    date: entryDate,
+    title: document.getElementById("entryTitle").textContent || "Journal Entry",
+    content: text,
+    mood_val: null  // You can later update this from your AI feedback if desired
+  };
+
+  // Retrieve current entries from localStorage
+  const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+  entries.push(newEntry);
+  localStorage.setItem("journalEntries", JSON.stringify(entries));
+
+  alert("Journal entry saved!");
+  // Optionally, navigate back to the main page:
+  window.location.href = "../index.html";
 });
