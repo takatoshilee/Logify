@@ -52,8 +52,7 @@ body {
     font-weight: 400;
     margin: 50px 0px 0px 45px;
     color: #744C4C;
-    line-height: 55px;
-    letter-spacing: -3px;
+    line-height: 1.5;
     padding-bottom: 0px;
     box-sizing: border-box; /* Include padding in width calculation */
 }
@@ -115,10 +114,12 @@ cursor: pointer;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     flex-direction: column;
     z-index: 0;
+    transition: bacckground-color 0.3s ease, box-shadow 0.5s ease;
 }
 
 .journal-entry:hover {
-    transform: scale(1.02);
+    background: #D1C7B7; 
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
 }
 
 .journal-entry img {
