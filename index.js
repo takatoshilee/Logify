@@ -1,32 +1,80 @@
-document.getElementById("search-btn").addEventListener("click", function () {
-    let searchBox = document.getElementById("search-box");
+// --- Helper Function ---
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 
-    if (searchBox.style.width === "150px") {
-        searchBox.style.width = "0px"; // Collapse
-        searchBox.style.opacity = "0";
-        setTimeout(() => searchBox.classList.add("hidden"), 300); // Delay hiding to match transition
-    } else {
-        searchBox.classList.remove("hidden"); // Show input
-        setTimeout(() => {
-            searchBox.style.width = "150px"; // Expand
-            searchBox.style.opacity = "1";
-        }, 10); // Tiny delay to allow transition
-        searchBox.focus();
-    }
+// --- Search Functionality ---
+const searchBtn = document.getElementById("search-btn");
+const searchBox = document.getElementById("search-box");
+
+// Remove duplicate event listeners: use one version of the toggle
+searchBtn.addEventListener("click", function () {
+if (searchBox.classList.contains("open")) {
+    searchBox.classList.remove("open");
+} else {
+    searchBox.classList.add("open");
+    searchBox.focus();
+}
 });
 
-document.getElementById("search-box").addEventListener("keypress", function(event) {
-    let searchBox = document.getElementById("search-box");
-    
-    if (event.key === "Enter") {
-        let key = event.target.value
-        console.log("Search Query:", key); // Log input value
-        event.target.classList.add("hidden");
-        event.target.value = ""; // Clear input
-        let searchBox = document.getElementById("search-box");
-        searchBox.style.width = "0px"; // Collapse
-        searchBox.style.opacity = "0";
-        setTimeout(() => searchBox.classList.add("hidden"), 300);
-    }
+searchBox.addEventListener("keypress", function (event) {
+if (event.key === "Enter") {
+    console.log("Search Query:", event.target.value);
+    event.target.value = "";
+    searchBox.classList.remove("open");
+}
 });
 
+// --- Render Journal Entries ---
+function renderJournals() {
+const container = document.getElementById("journalsContainer");
+container.innerHTML = ""; // Clear existing entries
+
+const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+// Sort entries by id descending (assuming higher id is more recent)
+entries.sort((a, b) => b.id - a.id);
+
+entries.forEach(entry => {
+    const entryDiv = document.createElement("div");
+    entryDiv.classList.add("journal-entry");
+
+    // Create the image element
+    const img = document.createElement("img");
+    img.src = "./entry/images/image.png"; 
+    img.alt = "Reading Journal";
+
+    // Create the title element
+    const titleDiv = document.createElement("div");
+    titleDiv.classList.add("journal-title");
+    titleDiv.textContent = entry.title || "Untitled";
+
+    // Create the journal text container
+    const journalTextDiv = document.createElement("div");
+    journalTextDiv.classList.add("journal-text");
+
+    // Create the date element inside journal-text
+    const dateDiv = document.createElement("div");
+    dateDiv.classList.add("journal-date");
+    dateDiv.textContent = entry.date;
+
+    // Append the date element into journal-text container
+    journalTextDiv.appendChild(dateDiv);
+
+    // Append image, title, and journal-text (with date) into the journal entry
+    entryDiv.appendChild(img);
+    entryDiv.appendChild(titleDiv);
+    entryDiv.appendChild(journalTextDiv);
+
+    // Set up click event so clicking the entry navigates to the detail page.
+    entryDiv.addEventListener("click", () => {
+    window.location.href = `entry/entry.html?id=${entry.id}`;
+    });
+
+    container.appendChild(entryDiv);
+});
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+renderJournals();
+});

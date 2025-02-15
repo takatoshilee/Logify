@@ -89,12 +89,36 @@ fileInput.addEventListener("change", () => {
   reader.readAsDataURL(file);
 });
 
+
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   checkApiKey();
   setCurrentDate();
   const storedAttachment = localStorage.getItem("attachment");
   if (storedAttachment) {
     attachmentPreview.innerHTML = `<img src="${storedAttachment}" alt="Attachment preview" />`;
+  }
+  
+  // --- Check for an entry id in the URL ---
+  const entryId = getQueryParam("id");
+  if (entryId) {
+    const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+    const entry = entries.find(e => String(e.id) === entryId);
+    if (entry) {
+      // Populate fields with entry data.
+      // Using a contenteditable div for the title:
+      document.getElementById("entryTitle").innerText = entry.title || "Journal Entry";
+      document.getElementById("dateField").innerText = `Date: ${entry.date}`;
+      journalText.value = entry.content || "";
+      // Optionally, handle additional fields like mood_val or attachments here.
+    } else {
+      console.warn("No entry found with id:", entryId);
+    }
   }
 });
 
