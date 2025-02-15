@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+
+
+.phone-frame {
+  width: 360px;           
+  height: 720px;    
+  background-color: #F8F2ED;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Days header */
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  color: #A47360;
+  margin-bottom: 5px;
+}
+
+.days > div {
+  font-weight: 600;
+}
+
+/* Dates grid */
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.date-cell {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #6c4a3b;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.date-cell:hover,
+.date-cell.active {
+  background: #6c4a3b;
+  color: #fff;
+}
+
+/* Stats Boxes (if not defined in shared style.css) */
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 15px 20px;
+}
+
+.stat-box {
+  background: #fff;
+  width: 120px;
+  height: 90px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  color: #6c4a3b;
+  font-weight: 600;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #A47360;
+  margin-top: 5px;
+}

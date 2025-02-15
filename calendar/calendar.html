@@ -3,43 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <title>Calendar</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Use your shared CSS for consistent look -->
+  <link rel="stylesheet" href="../style.css" />
+  <!-- Calendar-specific CSS overrides (if needed) -->
+  <link rel="stylesheet" href="calendar.css" />
 </head>
 <body>
-  <div class="calendar-container">
-    <h1>My Calendar</h1>
-    <div class="calendar">
-        <div class="header">
-            <button id="prevButton">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <div class="monthYear" id="monthYear"></div>
-            <button id="nextButton">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-        </div>
-        <div class="days">
-            <div class="day">Mon</div>
-            <div class="day">Tue</div>
-            <div class="day">Wed</div>
-            <div class="day">Thu</div>
-            <div class="day">Fri</div>
-            <div class="day">Sat</div>
-            <div class="day">Sun</div>
-        </div>
-        <div class="dates" id="dates"></div>
+  <div class="phone-frame">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="date-display" id="dateDisplay">TUESDAY, 08 AUGUST</div>
+      <div class="month-dropdown">
+        <div id="monthName">AUGUST</div>
+        <button id="monthToggleBtn">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Calendar Container -->
+    <div class="calendar-container">
+      <div class="days">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="dates" id="dates">
+        <!-- Date cells will be generated dynamically -->
+      </div>
+    </div>
+
+    <!-- Stats Boxes -->
+    <div class="stats-container">
+      <div class="stat-box">
+        <div class="stat-value" id="streakCount">0</div>
+        <div class="stat-label">Streak</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="totalJournals">0</div>
+        <div class="stat-label">Journals</div>
+      </div>
+    </div>
+
+    <div class="add-button">
+      <button id="add-journal-btn"  onclick="window.location.href='entry/entry.html'">
+          +
+      </button>
     </div>
     
-    <div class="stats">
-      <p>Total Journals: <span id="totalJournals"></span></p>
-      <p>Streak: <span id="streakCount"></span></p>
+    <!-- Bottom Navigation Bar (exactly as on the main page) -->
+    <div class="bottom-bar">
+      <img src="../images/home.png" alt="home" class="icon" id="homeIcon">
+      <a href="../index.html">
+        <img src="../images/user.png" alt="user" class="icon" id="userIcon">
+      </a>
     </div>
-
-    <!-- A simple monthly calendar grid -->
-    <div class="calendar-grid" id="calendarGrid"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="calendar.js"></script>
+  <!-- Optional: Font Awesome JS if needed -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
