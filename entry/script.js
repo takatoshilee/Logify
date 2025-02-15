@@ -53,6 +53,62 @@ async function callOpenAI(messages) {
   }
 }
 
+<<<<<<< Updated upstream
+=======
+// === Spotify Authentication ===
+const spotifyLoginBtn = document.getElementById("spotifyLoginBtn");
+const spotifyClientId = document.getElementById("spotifyClientId");
+const spotifyClientSecret = document.getElementById("spotifyClientSecret");
+
+// Handle Spotify Login
+spotifyLoginBtn.addEventListener("click", async () => {
+  const clientId = spotifyClientId.value.trim();
+  const clientSecret = spotifyClientSecret.value.trim();
+
+  if (!clientId || !clientSecret) {
+    alert("Please enter both Spotify Client ID and Client Secret.");
+    return;
+  }
+
+  // Save Spotify credentials to localStorage
+  localStorage.setItem("spotifyClientId", clientId);
+  localStorage.setItem("spotifyClientSecret", clientSecret);
+
+  // Now we initiate the Spotify authorization process
+  try {
+    const authToken = await getSpotifyAuthToken(clientId, clientSecret);
+    if (authToken) {
+      alert("Successfully logged in to Spotify!");
+      localStorage.setItem("spotifyAuthToken", authToken);
+    } else {
+      alert("Failed to authenticate with Spotify.");
+    }
+  } catch (error) {
+    console.error("Spotify authentication error:", error);
+    alert("Error during Spotify authentication.");
+  }
+});
+
+// Function to get Spotify Auth Token
+async function getSpotifyAuthToken(clientId, clientSecret) {
+  const authUrl = "https://accounts.spotify.com/api/token";
+  const credentials = btoa(`${clientId}:${clientSecret}`);
+
+  const response = await fetch(authUrl, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${credentials}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "grant_type=client_credentials",
+  });
+
+  const data = await response.json();
+  return data.access_token || null;
+}
+
+// === Date & Attachment Handling (unchanged) ===
+>>>>>>> Stashed changes
 const dateField = document.getElementById("dateField");
 const attachmentIcon = document.getElementById("attachmentIcon");
 const fileInput = document.getElementById("fileInput");
@@ -67,8 +123,8 @@ function setCurrentDate() {
   const day = String(now.getDate()).padStart(2, "0");
   const year = now.getFullYear();
   const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
   const monthName = monthNames[now.getMonth()];
   dateField.textContent = `Date: ${monthName} ${day}, ${year}`;
@@ -95,6 +151,14 @@ fileInput.addEventListener("change", () => {
   reader.readAsDataURL(file);
 });
 
+<<<<<<< Updated upstream
+=======
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+>>>>>>> Stashed changes
 document.addEventListener("DOMContentLoaded", () => {
   checkApiKey();
   setCurrentDate();
@@ -102,6 +166,24 @@ document.addEventListener("DOMContentLoaded", () => {
   if (storedAttachment) {
     attachmentPreview.innerHTML = `<img src="${storedAttachment}" alt="Attachment preview" />`;
   }
+<<<<<<< Updated upstream
+=======
+
+  // --- Check for an entry id in the URL ---
+  const entryId = getQueryParam("id");
+  if (entryId) {
+    const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+    const entry = entries.find(e => String(e.id) === entryId);
+    if (entry) {
+      document.getElementById("entryTitle").innerText = entry.title || "Journal Entry";
+      document.getElementById("dateField").innerText = `Date: ${entry.date}`;
+      journalText.value = entry.content || "";
+      console.log("Loaded content:", entry.content);
+    } else {
+      console.warn("No entry found with id:", entryId);
+    }
+  }
+>>>>>>> Stashed changes
 });
 
 // --------------------------
