@@ -80,6 +80,9 @@ cursor: pointer;
     max-height: 520px; 
 }
 
+.journals{
+    overflow-x: scroll;
+}
 
 .journal-entry {
     position: relative; 
