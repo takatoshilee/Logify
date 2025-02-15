@@ -10,6 +10,7 @@ body {
     padding: 0;
     line-height: 1.6;
     background-color: #dddddd;
+    font-family: "Poppins", serif;
 }
 .mobile {
     height: 100vh;
@@ -20,17 +21,16 @@ body {
 .phone {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 331px;
-    height: 616px;
+    align-items: left;
+    width: 360px;
+    height: 720px;
     background: #f7f2ec;
     border-radius: 30px;
     padding: 10px;
     box-shadow: 0px 0px 5px rgb(139, 139, 139);
 }
-
-h1 {
-    font-family: "Poppins", serif;
-    font-weight: 300;
-    font-style: normal;
+.title {
+    top: 0px;
+    font-size: 55px;
+    margin: 45px 95px 69px 0px;
 }
