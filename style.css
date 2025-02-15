@@ -30,7 +30,7 @@ body {
     padding: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
 }
 .title {
     top: 0px;
@@ -42,18 +42,6 @@ body {
     padding-bottom: 0px;
     box-sizing: border-box; /* Include padding in width calculation */
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 .menu_icons {
     position: absolute;
@@ -117,12 +105,14 @@ cursor: pointer;
 
 .journal-date {
     position: absolute;
+    width: 93%;
     top: 5px; 
     left: 10px; 
     color: #5a3d2b; 
     font-size: 12px;
     font-weight: 500;
     background: none; 
+    border-top: 1px solid #744C4C;
 }
 
 .journal-text {
