@@ -219,13 +219,15 @@ saveEntryBtn.addEventListener("click", () => {
   // Create an entry object with standardized fields
   const now = new Date();
   const entryDate = now.toISOString().split("T")[0]; // YYYY-MM-DD
+  const attachment = localStorage.getItem("attachment"); // if you save the attachment there
   const newEntry = {
-    id: Date.now(),  // unique id
-    date: entryDate,
-    title: document.getElementById("entryTitle").textContent || "Journal Entry",
-    content: text,
-    mood_val: null  // You can later update this from your AI feedback if desired
-  };
+  id: Date.now(),
+  date: entryDate,
+  title: document.getElementById("entryTitle").innerText || "Journal Entry",
+  content: text,
+  mood_val: null,  // or update this later
+  attachment: attachment || null
+};
 
   // Retrieve current entries from localStorage
   const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
