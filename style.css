@@ -32,6 +32,22 @@ body {
     position: relative;
     overflow-y: visible;
 }
+
+
+.phone-frame {
+    width: 360px;           
+    height: 720px;    
+    background-color: #F8F2ED;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  
 .title {
     top: 0px;
     font-size: 45px;
