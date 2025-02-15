@@ -20,20 +20,85 @@ body {
 }
 .phone {
     display: flex;
-    justify-content: center;
-    align-items: left;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start; /* Align children to the top */
+    align-items: flex-start; /* Align children to the left */
     width: 360px;
     height: 720px;
     background: #f7f2ec;
     border-radius: 30px;
     padding: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
 }
 .title {
     top: 0px;
     font-size: 45px;
     font-weight: 400;
-    margin: 50px 69px 0px 45px;
+    margin: 50px 0px 0px 45px;
     color: #744C4C;
     line-height: 1.5;
+    padding-bottom: 0px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.search-container {
+    display: flex;
+    align-items: center; /* Fix alignment */
+    position: relative; /* Ensures the search box appears properly */
+    max-width: 250px; /* Prevents it from growing too large */
+    overflow: visible; /* Ensures nothing goes out */
+}
+.menu_icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    margin: 175px auto;
+    padding: 0 20px;
+    background-color: transparent;
+    max-width: 90%; /* Position at the bottom */
+    bottom: 310px; /* Distance from the bottom */
+    left: 60%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    position: absolute;
+  }
+
+.icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin: 0 8px 0 8px;
+    flex-shrink: 0;
+  }
+
+#search-box {
+    right: 50px;
+    width: 0px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    max-width: 150px;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    background: white;
+    bottom: 250px; /* Distance from the bottom */
+    left: 50%;
+}
+
+.hidden {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    border: none;
+}
+
+#search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 5px;
 }
