@@ -1,0 +1,172 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    background-color: #ddd; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .phone-frame {
+    width: 360px;           
+    height: 720px;    
+    background-color: #F8F2ED;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    background-color: transparent;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    color: #744C4C;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .journal-title {
+    font-size: 45px;
+    color: #744C4C;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  
+  .date {
+    font-size: 16px;
+    color: #744C4C;
+    margin-bottom: 10px;
+  }
+  
+  .attachment-preview {
+    margin-bottom: 10px;
+  }
+  .attachment-preview img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 5px;
+  }
+  .attachment-preview .file-name {
+    font-size: 14px;
+    color: #744C4C;
+    background-color: #f2e8e8;
+    padding: 5px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 5px;
+  }
+  
+  .journal-text {
+    width: 100%;
+    min-height: 120px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #744C4C;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    resize: none;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    flex: 1;
+    background-color: #A47360; 
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .feedback {
+    font-size: 14px;
+    color: #744C4C;
+    background-color: #f2e8e8;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+  .mood-score {
+    font-weight: bold;
+    color: #744C4C;
+  }
+  
+  #fileInput {
+    display: none;
+  }
+  
+  #apiKeyModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  #apiKeyModalContent {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+  }
+  #apiKeyModalContent input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  #apiKeyModalContent button {
+    padding: 10px 20px;
+    background-color: #A47360;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #apiKeyModalContent button:hover {
+    opacity: 0.9;
+  }
