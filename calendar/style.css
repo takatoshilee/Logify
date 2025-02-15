@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #dddddd;
+  }
+  
+  .calendar-container {
+    width: 360px;      /* match your phone width */
+    margin: 0 auto;
+    background: #f7f2ec;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    height: 720px;     /* match phone height */
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;  /* or auto if needed */
+  }
+  
+  h1 {
+    margin-top: 10px;
+    color: #744C4C;
+    text-align: center;
+  }
+  
+  .stats {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 days a week */
+    grid-auto-rows: 50px;                  /* each cell height */
+    gap: 5px;
+    margin: 0 10px;
+  }
+  
+  /* Each day cell */
+  .day-cell {
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Highlight if there's an entry */
+  .day-cell.has-entry {
+    background: #c0e0c0;
+    color: #000;
+  }
+  
+  /* For an optional streak marker, or anything you want to show */
+  .day-cell::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent; /* Could color this if you want to show a streak dot */
+  }
