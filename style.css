@@ -110,8 +110,7 @@ cursor: pointer;
     height: 150px;
     width: 310px;
     display: flex;
-    align-items: center;
-    background: white;
+    background: #EFE7DD;
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 15px;
@@ -120,6 +119,9 @@ cursor: pointer;
     z-index: 0;
 }
 
+.journal-entry:hover {
+    transform: scale(1.02);
+}
 
 .journal-entry img {
     width: 100%;
@@ -134,10 +136,12 @@ cursor: pointer;
     top: 5px; 
     left: 10px; 
     color: #5a3d2b; 
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     background: none; 
     border-top: 1px solid #744C4C;
+    display: block;
+    margin-bottom: 5px
 }
 
 .journal-text {
@@ -156,9 +160,14 @@ cursor: pointer;
 }
 
 .journal-title {
-    font-size: 18px;
-    color: whitesmoke;
-    margin: 0;
+    font-size: 14px;
+    font-weight: 550;
+    color: #6c4a3b;
+    text-align: left;
+    margin-top: 7px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    
 }
 
 .add-button {
