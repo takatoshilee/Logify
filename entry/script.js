@@ -68,6 +68,7 @@ function setCurrentDate() {
   dateField.textContent = `Date: ${monthName} ${day}, ${year}`;
 }
 
+
 attachmentIcon.addEventListener("click", () => {
   fileInput.click();
 });
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Populate fields with entry data.
       // Using a contenteditable div for the title:
       document.getElementById("entryTitle").innerText = entry.title || "Journal Entry";
-      document.getElementById("dateField").innerText = `Date: ${entry.date}`;
+      document.getElementById("dateField").innerText = `Date: ${formatDate(entry.date)}`;
       journalText.value = entry.content || "";
       // Optionally, handle additional fields like mood_val or attachments here.
     } else {
