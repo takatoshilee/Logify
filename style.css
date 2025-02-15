@@ -97,7 +97,11 @@ cursor: pointer;
 }
 
 .journals{
+    position: relative;
     overflow-x: scroll;
+    height: 400px;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%);
 }
 
 .journal-entry {
