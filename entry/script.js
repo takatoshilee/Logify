@@ -68,6 +68,17 @@ function setCurrentDate() {
   dateField.textContent = `Date: ${monthName} ${day}, ${year}`;
 }
 
+function formatDate(dateInput) {
+  // Append time component if needed to avoid timezone issues:
+  const date = new Date(dateInput + "T00:00:00");
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const dayName = days[date.getDay()];
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return `${dayName}, ${month} ${day},${year}`;
+}
 
 attachmentIcon.addEventListener("click", () => {
   fileInput.click();
@@ -109,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (entry) {
       // Populate fields with the entry data
       document.getElementById("entryTitle").innerText = entry.title || "Journal Entry";
-      document.getElementById("dateField").innerText = `Date: ${entry.date}`;
+      document.getElementById("dateField").innerText = `Date: ${formatDate(entry.date)}`;
       journalText.value = entry.content || "";
       // Load the attachment from the entry if it exists
       if (entry.attachment) {
@@ -142,11 +153,12 @@ feedbackBtn.addEventListener("click", async () => {
     return;
   }
   const systemPrompt = `
-    You are an AI that analyzes the user's journal entry. 
+    Act as a therapist and provide feedback and analysis on the diary's content.
     Return JSON with:
     {
       "score": number (1-100, describing the mood positivity),
-      "feedback": string (a short paragraph of feedback or advice)
+      "emotion": string ("Acceptance", "Calm", "Excited", "Grateful", "Happy", "Hopeful", "Loved", "Relaxed", "Relieved", "Satisfied", "Angry", "Anxious", "Bored", "Detached", "Hopeless", "Restless", "Sad", "Stressed", "Tired", "Worried")
+      "feedback": string (a short paragraph)
     }
     Only valid JSON, no extra text.
   `;
