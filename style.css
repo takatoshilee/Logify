@@ -54,9 +54,10 @@ body {
     font-weight: 400;
     margin: 50px 0px 0px 45px;
     color: #744C4C;
-    line-height: 1.5;
+    line-height: 55px;
     padding-bottom: 0px;
     box-sizing: border-box; /* Include padding in width calculation */
+    letter-spacing: -2px;
 }
 
 .menu_icons {
@@ -162,7 +163,7 @@ cursor: pointer;
 
 .add-button {
     position: absolute;
-    bottom: 30px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
