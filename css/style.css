@@ -1,0 +1,28 @@
+html, body {
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #dddddd;
+}
+.mobile {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.phone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 331px;
+    height: 616px;
+    background: #f7f2ec;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0px 0px 5px rgb(139, 139, 139);
+}
