@@ -111,12 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
     const entry = entries.find(e => String(e.id) === entryId);
     if (entry) {
-      // Populate fields with entry data.
-      // Using a contenteditable div for the title:
       document.getElementById("entryTitle").innerText = entry.title || "Journal Entry";
-      document.getElementById("dateField").innerText = `Date: ${formatDate(entry.date)}`;
+      document.getElementById("dateField").innerText = `Date: ${entry.date}`;
       journalText.value = entry.content || "";
-      // Optionally, handle additional fields like mood_val or attachments here.
+      console.log("Loaded content:", entry.content);
     } else {
       console.warn("No entry found with id:", entryId);
     }
@@ -130,6 +128,7 @@ const feedbackContainer = document.getElementById("feedbackContainer");
 
 feedbackBtn.addEventListener("click", async () => {
   const text = journalText.value.trim();
+  console.log("Saving text:", text);
   if (!text) {
     alert("Please write something first.");
     return;
@@ -212,30 +211,53 @@ const saveEntryBtn = document.getElementById("saveEntryBtn");
 
 saveEntryBtn.addEventListener("click", () => {
   const text = journalText.value.trim();
+  console.log("Saving text:", text);  // Debug log
+  
   if (!text) {
     alert("Please write something before saving.");
     return;
   }
 
-  // Create an entry object with standardized fields
+  // Get current date in YYYY-MM-DD format
   const now = new Date();
-  const entryDate = now.toISOString().split("T")[0]; // YYYY-MM-DD
-  const attachment = localStorage.getItem("attachment"); // if you save the attachment there
-  const newEntry = {
-  id: Date.now(),
-  date: entryDate,
-  title: document.getElementById("entryTitle").innerText || "Journal Entry",
-  content: text,
-  mood_val: null,  // or update this later
-  attachment: attachment || null
-};
+  const entryDate = now.toISOString().split("T")[0];
 
-  // Retrieve current entries from localStorage
-  const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
-  entries.push(newEntry);
+  // Get attachment if available
+  const attachment = localStorage.getItem("attachment") || null;
+
+  // Get the title from the contenteditable div
+  const title = document.getElementById("entryTitle").innerText.trim() || "Journal Entry";
+
+  // Check if we're updating an existing entry
+  const entryId = getQueryParam("id");
+  let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+
+  if (entryId) {
+    const index = entries.findIndex(e => String(e.id) === entryId);
+    if (index !== -1) {
+      entries[index].date = entryDate;
+      entries[index].title = title;
+      entries[index].content = text; // Save the journal text
+      entries[index].attachment = attachment;
+      alert("Journal entry updated!");
+    } else {
+      console.warn("No entry found with id:", entryId);
+    }
+  } else {
+    const newEntry = {
+      id: Date.now(),
+      date: entryDate,
+      title: title,
+      content: text, // This should be your journal text
+      mood_val: null,
+      attachment: attachment
+    };
+    console.log("New Entry:", newEntry);
+    entries.push(newEntry);
+    alert("Journal entry saved!");
+  }
+  
   localStorage.setItem("journalEntries", JSON.stringify(entries));
-
-  alert("Journal entry saved!");
-  // Optionally, navigate back to the main page:
+  localStorage.removeItem("attachment");
   window.location.href = "../index.html";
 });
