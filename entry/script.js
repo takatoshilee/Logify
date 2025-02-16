@@ -157,7 +157,7 @@ feedbackBtn.addEventListener("click", async () => {
     Return JSON with:
     {
       "score": number (1-100, describing the mood positivity),
-      "emotion": string ("Acceptance", "Calm", "Excited", "Grateful", "Happy", "Hopeful", "Loved", "Relaxed", "Relieved", "Satisfied", "Angry", "Anxious", "Bored", "Detached", "Hopeless", "Restless", "Sad", "Stressed", "Tired", "Worried")
+      "emotion": string ("Acceptance", "Calm", "Excited", "Grateful", "Happy", "Hopeful", "Loved", "Relaxed", "Relieved", "Satisfied", "Angry", "Anxious", "Bored", "Detached", "Hopeless", "Restless", "Sad", "Stressed", "Tired", "Worried"),
       "feedback": string (a short paragraph)
     }
     Only valid JSON, no extra text.
@@ -179,6 +179,10 @@ feedbackBtn.addEventListener("click", async () => {
     alert("Could not parse AI response. Check console for details.");
     return;
   }
+  
+  // Store the mood score in localStorage so it can be used when saving the entry
+  localStorage.setItem("moodvalue", analysis.score);
+  
   feedbackContainer.innerHTML = `
     <div class="feedback">
       <p><strong>Mood Score:</strong> <span class="mood-score">${analysis.score}</span></p>
@@ -224,6 +228,11 @@ rephraseBtn.addEventListener("click", async () => {
       <p>${rephraseObj.rephrased}</p>
     </div>
   `;
+
+
+  // In your feedbackBtn event handler, after parsing the response:
+  localStorage.setItem("moodvalue", analysis.score);
+  console.log("Stored moodvalue:", analysis.score);
 });
 
 // === NEW: Save Entry to Local Storage ===
@@ -231,24 +240,31 @@ const saveEntryBtn = document.getElementById("saveEntryBtn");
 
 saveEntryBtn.addEventListener("click", () => {
   const text = journalText.value.trim();
-  console.log("Saving text:", text);  // Debug log
-  
   if (!text) {
     alert("Please write something before saving.");
     return;
   }
 
-  // Get current date in YYYY-MM-DD format
+  // Use the date from your date input (or current date if not modified)
   const now = new Date();
-  const entryDate = now.toISOString().split("T")[0];
+  const entryDate = document.getElementById("entryDateInput")?.value || now.toISOString().split("T")[0];
 
   // Get attachment if available
   const attachment = localStorage.getItem("attachment") || null;
 
-  // Get the title from the contenteditable div
+  // Get title from the contenteditable div
   const title = document.getElementById("entryTitle").innerText.trim() || "Journal Entry";
 
-  // Check if we're updating an existing entry
+  // Retrieve mood value from localStorage
+  // If it's null, you can assign a default value (for example, 50) or leave it as null.
+  let moodVal = localStorage.getItem("moodvalue");
+  if (moodVal !== null) {
+    moodVal = Number(moodVal);
+  } else {
+    // Optionally assign a default, or leave as null
+    moodVal = null; // or: moodVal = 50;
+  }
+
   const entryId = getQueryParam("id");
   let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
 
@@ -257,8 +273,9 @@ saveEntryBtn.addEventListener("click", () => {
     if (index !== -1) {
       entries[index].date = entryDate;
       entries[index].title = title;
-      entries[index].content = text; // Save the journal text
+      entries[index].content = text;
       entries[index].attachment = attachment;
+      entries[index].mood_val = moodVal;
       alert("Journal entry updated!");
     } else {
       console.warn("No entry found with id:", entryId);
@@ -268,16 +285,18 @@ saveEntryBtn.addEventListener("click", () => {
       id: Date.now(),
       date: entryDate,
       title: title,
-      content: text, // This should be your journal text
-      mood_val: null,
+      content: text,
+      mood_val: moodVal,
       attachment: attachment
     };
-    console.log("New Entry:", newEntry);
     entries.push(newEntry);
     alert("Journal entry saved!");
   }
   
   localStorage.setItem("journalEntries", JSON.stringify(entries));
+  // Clear temporary values
   localStorage.removeItem("attachment");
+  localStorage.removeItem("moodvalue");
+  
   window.location.href = "../index.html";
 });
