@@ -3,6 +3,7 @@ const apiKeyModal = document.getElementById("apiKeyModal");
 const apiKeyInput = document.getElementById("apiKeyInput");
 const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
 
+
 function checkApiKey() {
   const key = localStorage.getItem("openai_api_key");
   apiKeyModal.style.display = key ? "none" : "flex";
@@ -302,15 +303,35 @@ saveEntryBtn.addEventListener("click", () => {
 });
 
 
+
+const spotifyAccessToken = "BQDSAr2jG-Wtakrf1uFQSAP6GbHxRud7uF-bbyfTLXnqgoD0DWmvufRcPLHrQQCIl56cyXJOhMHv1X13lPjq5wjAL5bP7JYtS10Ucb8Tv5UoXgK8gafx_EbLbkEpV8ckfZhgx21HfSU"
+
 const songBtn = document.getElementById("songBtn");
 const songRecommendationEl = document.getElementById("songRecommendation");
 
+
+async function searchSpotifyTrack(query) {
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=1`;
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${spotifyAccessToken}`
+      }
+    });
+    const data = await response.json();
+    if (data.tracks && data.tracks.items.length > 0) {
+      return data.tracks.items[0].id; // Return the track ID
+    }
+  } catch (error) {
+    console.error("Spotify search error:", error);
+  }
+  return null;
+}
+
 songBtn.addEventListener("click", async () => {
-  // Get the CD emoji element and add a rotating class to indicate loading
   const cdEmoji = songBtn.querySelector(".cd-emoji");
   cdEmoji.classList.add("rotating");
 
-  // Use the journal text to generate a song recommendation
   const journalContent = journalText.value.trim();
   if (!journalContent) {
     alert("Please write something first.");
@@ -318,10 +339,11 @@ songBtn.addEventListener("click", async () => {
     return;
   }
   
+  // Create a prompt for song recommendation based on the journal entry
   const prompt = `
     Based on the following journal entry, suggest a song that best captures its mood and tone.
-    Provide the song title and artist in the format "Song Title" by Artist.
-    Journal entry: "${journalContent}"
+    Provide the song title and artist in the format "Song Title" by Artist:
+    "${journalContent}"
   `;
   
   const messages = [
@@ -339,16 +361,23 @@ songBtn.addEventListener("click", async () => {
   
   const recommendedSong = aiResponse.trim();
   
-  // Create a Spotify search URL for the recommended song
-  const searchUrl = "https://open.spotify.com/search/" + encodeURIComponent(recommendedSong);
+  // Now search Spotify for this song
+  const trackId = await searchSpotifyTrack(recommendedSong);
   
-  // Build the song card HTML
-  songRecommendationEl.innerHTML = `
-    <a href="${searchUrl}" target="_blank" style="text-decoration: none;">
-      <div class="song-card">
-        <span class="cd-emoji">💿</span>
-        <span class="song-text">${recommendedSong}</span>
-      </div>
-    </a>
-  `;
+  // Clear any previous recommendation
+  songRecommendationEl.innerHTML = "";
+  
+  if (trackId) {
+    // Embed Spotify player using the track ID
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://open.spotify.com/embed/track/${trackId}`;
+    iframe.width = "300";
+    iframe.height = "80";
+    iframe.frameBorder = "0";
+    iframe.allowTransparency = "true";
+    iframe.allow = "encrypted-media";
+    songRecommendationEl.appendChild(iframe);
+  } else {
+    songRecommendationEl.textContent = "No matching song found.";
+  }
 });
