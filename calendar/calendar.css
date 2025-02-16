@@ -1,17 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-
+html, body {
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Make sure it takes full height */
+}
 
 .phone-frame {
-  width: 360px;           
-  height: 720px;    
-  background-color: #F8F2ED;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Align children to the top */
+  align-items: center; /* Align children to the left */
+  width: 360px;
+  height: 720px;
+  background: #f7f2ec;
   border-radius: 30px;
+  padding: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   position: relative;
-  overflow: hidden;
+  overflow-y: visible;
+}
+
+.calendar-container {
+  size: auto;
+}
+
+.top-bar {
   display: flex;
+  position: absolute;
+  top: 30px;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  width: 100%;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #6c4a3b;
+}
+
+.month-dropdown {
+  position: absolute;
+  top: 35px; /* Adjust based on your UI */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f7f2ec; /* Light beige background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  z-index: 10;
+  width: 150px; /* Adjust width as needed */
+}
+
+.month-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  color: #6c4a3b; /* Brown text */
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.3s, color 0.3s;
+  border-radius: 5px;
+}
+
+.month-option:hover {
+  background: #6c4a3b; /* Darker brown for hover */
+  color: white; /* White text */
 }
 
 /* Days header */
@@ -84,4 +145,17 @@
   font-size: 14px;
   color: #A47360;
   margin-top: 5px;
+}
+
+.bottom-bar {
+  bottom: 12px;
+  position: absolute;
+  width: 80%;
+  background: #f7f2ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  padding: 0 10px;
+  z-index: 1;
 }
