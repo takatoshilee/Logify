@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nikki</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Include Chart.js from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="mobile">
@@ -29,8 +31,12 @@
                         <!-- Journal entries will be inserted here -->
                     </div>
                 </div>
+                <!-- Mood chart appears below the journal entries -->
+                <div class="chart-container" style="width: 90%; margin: 20px auto;">
+                    <canvas id="moodChart"></canvas>
+                </div>
                 <div class="add-button">
-                    <button id="add-journal-btn"  onclick="window.location.href='entry/entry.html'">
+                    <button id="add-journal-btn" onclick="window.location.href='entry/entry.html'">
                         +
                     </button>
                 </div>
