@@ -1,0 +1,15 @@
+{
+    "name": "Logify",
+    "short_name": "Logify",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f7f2ec",
+    "theme_color": "#6c4a3b",
+    "icons": [
+      {
+        "src": "images/Icon.png",
+        "sizes": "619x662",
+        "type": "image/png"
+      }
+    ]
+  }
