@@ -17,3 +17,5 @@ We learned how to integrate OpenAI and Spotify APIs to transform raw journal ent
 ## What's next for Logify 🚀
 Our next steps include refining the core experience. We want to expand Logify by integrating physical health data, tracking more detailed mood analytics, and even correlating those insights with physiological metrics like heart rate. We’re also exploring the idea of a personalized chatbot that remembers your journal entries and offers tailored suggestions. For now, our focus is on making the current product as useful and user-friendly as possible, with lots of room for growth down the line.
 
+## Contributors
+Takatoshi Lee, Gerardus Raynard Effrien, Sani Muhammad Daveisha Ali and Nikita Nathania Rudy.
