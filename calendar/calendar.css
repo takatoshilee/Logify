@@ -28,7 +28,7 @@ body {
 }
 
 .calendar-container {
-  size: auto;
+  size: fill;
 }
 
 .top-bar {
