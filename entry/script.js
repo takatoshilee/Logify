@@ -147,7 +147,6 @@ const feedbackContainer = document.getElementById("feedbackContainer");
 
 feedbackBtn.addEventListener("click", async () => {
   const text = journalText.value.trim();
-  console.log("Saving text:", text);
   if (!text) {
     alert("Please write something first.");
     return;
@@ -157,8 +156,8 @@ feedbackBtn.addEventListener("click", async () => {
     Return JSON with:
     {
       "score": number (1-100, describing the mood positivity),
-      "emotion": string ("Acceptance", "Calm", "Excited", "Grateful", "Happy", "Hopeful", "Loved", "Relaxed", "Relieved", "Satisfied", "Angry", "Anxious", "Bored", "Detached", "Hopeless", "Restless", "Sad", "Stressed", "Tired", "Worried")
-      "feedback": string (a short paragraph)
+      "emotion": string,
+      "feedback": string
     }
     Only valid JSON, no extra text.
   `;
@@ -185,7 +184,10 @@ feedbackBtn.addEventListener("click", async () => {
       <p>${analysis.feedback}</p>
     </div>
   `;
+  // Save the mood score globally so that the Save Entry button can use it.
+  window.currentMoodScore = analysis.score;
 });
+
 
 rephraseBtn.addEventListener("click", async () => {
   const text = journalText.value.trim();
@@ -231,53 +233,47 @@ const saveEntryBtn = document.getElementById("saveEntryBtn");
 
 saveEntryBtn.addEventListener("click", () => {
   const text = journalText.value.trim();
-  console.log("Saving text:", text);  // Debug log
-  
   if (!text) {
     alert("Please write something before saving.");
     return;
   }
 
-  // Get current date in YYYY-MM-DD format
   const now = new Date();
   const entryDate = now.toISOString().split("T")[0];
-
-  // Get attachment if available
+  const title = document.getElementById("entryTitle").innerText.trim() || "Journal Entry";
   const attachment = localStorage.getItem("attachment") || null;
 
-  // Get the title from the contenteditable div
-  const title = document.getElementById("entryTitle").innerText.trim() || "Journal Entry";
+  // Use the mood value from the AI feedback if available
+  const moodVal = window.currentMoodScore !== undefined ? window.currentMoodScore : null;
 
-  // Check if we're updating an existing entry
+  // Build the new entry object. Also add a 'tag' if you decide to prompt or add an input.
+  const newEntry = {
+    id: Date.now(),
+    date: entryDate,
+    title: title,
+    content: text,
+    mood_val: moodVal,
+    tag: "",         // You can later update this with user input for tag(s)
+    attachment: attachment
+  };
+
+  const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+  // If editing an existing entry (using URL id) update instead of adding new
   const entryId = getQueryParam("id");
-  let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
-
   if (entryId) {
     const index = entries.findIndex(e => String(e.id) === entryId);
     if (index !== -1) {
-      entries[index].date = entryDate;
-      entries[index].title = title;
-      entries[index].content = text; // Save the journal text
-      entries[index].attachment = attachment;
+      entries[index] = newEntry;
       alert("Journal entry updated!");
-    } else {
-      console.warn("No entry found with id:", entryId);
     }
   } else {
-    const newEntry = {
-      id: Date.now(),
-      date: entryDate,
-      title: title,
-      content: text, // This should be your journal text
-      mood_val: null,
-      attachment: attachment
-    };
-    console.log("New Entry:", newEntry);
     entries.push(newEntry);
     alert("Journal entry saved!");
   }
-  
+
   localStorage.setItem("journalEntries", JSON.stringify(entries));
   localStorage.removeItem("attachment");
+  // Optionally, clear the global mood score after saving
+  window.currentMoodScore = undefined;
   window.location.href = "../index.html";
 });

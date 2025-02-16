@@ -1,110 +1,167 @@
-// --- Date Formatting Function ---
-function formatDate(dateInput) {
-    // Append "T00:00:00" so the date is parsed in local time
-    const date = new Date(dateInput + "T00:00:00");
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const dayName = days[date.getDay()];
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${dayName}, ${month} ${day},${year}`;
+/*******************************************************
+ * BIG FAKE DATASET
+ *******************************************************/
+const FAKE_DATASET = [
+  {
+    id: 1001,
+    date: "2025-06-01",
+    title: "Morning Yoga",
+    content: "Did 30 minutes of yoga, felt energized.",
+    mood_val: 0.8,
+    attachment: null
+  },
+  {
+    id: 1002,
+    date: "2025-06-02",
+    title: "Work Meeting",
+    content: "Discussed new app features for next sprint.",
+    mood_val: 0.5,
+    attachment: null
+  },
+  {
+    id: 1003,
+    date: "2025-06-03",
+    title: "Grocery Shopping",
+    content: "Bought veggies, fruits, and snacks for the week.",
+    mood_val: 0.7,
+    attachment: null
+  },
+  {
+    id: 1004,
+    date: "2025-06-04",
+    title: "Movie Night",
+    content: "Watched a comedy with friends, lots of laughter!",
+    mood_val: 0.9,
+    attachment: null
+  },
+  {
+    id: 1005,
+    date: "2025-05-28",
+    title: "Doctor Appointment",
+    content: "Checkup was routine. Advised me to drink more water.",
+    mood_val: 0.6,
+    attachment: null
+  },
+  {
+    id: 1006,
+    date: "2025-06-10",
+    title: "Code Refactoring",
+    content: "Spent hours cleaning old code, quite tedious.",
+    mood_val: 0.4,
+    attachment: null
+  },
+  {
+    id: 1007,
+    date: "2025-06-11",
+    title: "Beach Trip",
+    content: "Relaxing by the shore, enjoying the sun.",
+    mood_val: 0.95,
+    attachment: null
+  },
+  {
+    id: 1008,
+    date: "2025-06-12",
+    title: "Late-night Gaming",
+    content: "Played online games until 2 AM, super fun but tired.",
+    mood_val: 0.75,
+    attachment: null
+  },
+  {
+    id: 1009,
+    date: "2025-06-13",
+    title: "Random Thoughts",
+    content: "Thinking about journaling strategies, might add tagging next.",
+    mood_val: 0.65,
+    attachment: null
+  },
+  {
+    id: 1010,
+    date: "2025-06-14",
+    title: "Concert Night",
+    content: "Live band was amazing, the atmosphere was electric!",
+    mood_val: 0.85,
+    attachment: null
+  }
+];
+
+/*******************************************************
+ * LOAD / SAVE localStorage
+ *******************************************************/
+function loadInitialData() {
+  const existing = localStorage.getItem("journalEntries");
+  if (!existing) {
+    // If no data, store the FAKE_DATASET
+    localStorage.setItem("journalEntries", JSON.stringify(FAKE_DATASET));
+  }
+}
+
+function getAllJournals() {
+  const stored = localStorage.getItem("journalEntries");
+  return stored ? JSON.parse(stored) : [];
+}
+
+function renderMoodChart() {
+  // Retrieve all journal entries from localStorage
+  const entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+  if (!entries.length) {
+    console.warn("No journal entries found for chart.");
+    return;
   }
   
-  // --- Render Journals Function ---
-  // Accepts an optional array of entries; if none is provided, loads all from localStorage.
-  function renderJournals(entriesParam) {
-    const container = document.getElementById("journalsContainer");
-    container.innerHTML = ""; // Clear existing entries
+  // Sort entries by date ascending
+  entries.sort((a, b) => new Date(a.date) - new Date(b.date));
   
-    let entries = entriesParam;
-    if (!entries) {
-      entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
-    }
-  
-    // Sort entries by id descending (most recent first)
-    entries.sort((a, b) => b.id - a.id);
-  
-    entries.forEach(entry => {
-      const entryDiv = document.createElement("div");
-      entryDiv.classList.add("journal-entry");
-  
-      // Create the image element (use attachment if provided)
-      const img = document.createElement("img");
-      img.src = entry.attachment ? entry.attachment : "./entry/images/image.png";
-      img.alt = "Reading Journal";
-  
-      // Create the title element
-      const titleDiv = document.createElement("div");
-      titleDiv.classList.add("journal-title");
-      titleDiv.textContent = entry.title || "Untitled";
-  
-      // Create the journal-text container
-      const journalTextDiv = document.createElement("div");
-      journalTextDiv.classList.add("journal-text");
-  
-      // Create the date element inside journal-text
-      const dateDiv = document.createElement("div");
-      dateDiv.classList.add("journal-date");
-      dateDiv.textContent = formatDate(entry.date);
-  
-      // Append date element into journal-text container
-      journalTextDiv.appendChild(dateDiv);
-  
-      // Append image, title, and journal-text to the journal entry
-      entryDiv.appendChild(img);
-      entryDiv.appendChild(titleDiv);
-      entryDiv.appendChild(journalTextDiv);
-  
-      // When clicking the entry, navigate to the detail view
-      entryDiv.addEventListener("click", () => {
-        window.location.href = `entry/entry.html?id=${entry.id}`;
-      });
-  
-      container.appendChild(entryDiv);
-    });
-  }
-  
-  // --- Filter Journals Function ---
-  // Filters entries based on a query that searches title and content.
-  function filterJournals(query) {
-    const allEntries = JSON.parse(localStorage.getItem("journalEntries")) || [];
-    return allEntries.filter(entry => {
-      const title = entry.title ? entry.title.toLowerCase() : "";
-      const content = entry.content ? entry.content.toLowerCase() : "";
-      return title.includes(query.toLowerCase()) || content.includes(query.toLowerCase());
-    });
-  }
-  
-  // --- Search Box Event Handling ---
-  const searchBox = document.getElementById("search-box");
-  searchBox.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      const query = event.target.value.trim();
-      if (query === "") {
-        // If query is empty, show all entries.
-        renderJournals();
-      } else {
-        const filteredEntries = filterJournals(query);
-        renderJournals(filteredEntries);
+  // Extract dates and mood values. Convert mood from 1-100 to a normalized scale (if needed) or use directly.
+  const labels = entries.map(e => e.date);
+  const moodValues = entries.map(e => e.mood_val !== null ? e.mood_val : 0);
+
+  // Get the canvas context (ensure you have a canvas element with id="moodChart" in your HTML)
+  const ctx = document.getElementById("moodChart").getContext("2d");
+
+  // Create the chart
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Mood Sentiment",
+          data: moodValues,
+          borderColor: "rgba(75, 192, 192, 1)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          fill: true,
+          tension: 0.2
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100, // if mood is 1-100; if normalized (0-1), change accordingly
+          title: {
+            display: true,
+            text: "Mood Score"
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: "Date"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true
+        },
+        tooltip: {
+          enabled: true
+        }
       }
-      event.target.value = "";           // Clear the input
-      searchBox.classList.remove("open"); // Optionally collapse the search box
     }
   });
-  
-  // --- Search Button Toggle (if you're using a toggle style) ---
-  const searchBtn = document.getElementById("search-btn");
-  searchBtn.addEventListener("click", function () {
-    if (searchBox.classList.contains("open")) {
-      searchBox.classList.remove("open");
-    } else {
-      searchBox.classList.add("open");
-      searchBox.focus();
-    }
-  });
-  
-  // --- Initial Render on DOM Content Loaded ---
-  document.addEventListener("DOMContentLoaded", () => {
-    renderJournals();
-  });
+}
+
+
+
