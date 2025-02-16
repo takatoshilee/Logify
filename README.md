@@ -1,3 +1,5 @@
+## DEMO: https://youtu.be/2aH4l0eTJ8M
+
 ## Inspiration 💭
 According to studies, regular journaling can reduce stress by up to 28% and improve overall well-being. Yet, many people find traditional journaling tedious and uninspiring. That’s why we reinvented it. With Logify, you get the perfect song at the perfect moment—no more endless searching. Our app tracks your emotions with every entry and provides real-time mood ratings and feedback. Logify turns your diary into an engaging, interactive experience that not only boosts mindfulness but also propels personal growth.
 
