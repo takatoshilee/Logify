@@ -175,3 +175,32 @@
   #apiKeyModalContent button:hover {
     opacity: 0.9;
   }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .cd-emoji.rotating {
+    animation: rotate 1s linear infinite;
+  }
+  
+  .song-card {
+    background-color: #e0e0e0;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .song-card:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .song-text {
+    font-size: 14px;
+    color: #333;
+  }

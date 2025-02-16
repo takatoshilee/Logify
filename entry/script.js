@@ -300,3 +300,55 @@ saveEntryBtn.addEventListener("click", () => {
   
   window.location.href = "../index.html";
 });
+
+
+const songBtn = document.getElementById("songBtn");
+const songRecommendationEl = document.getElementById("songRecommendation");
+
+songBtn.addEventListener("click", async () => {
+  // Get the CD emoji element and add a rotating class to indicate loading
+  const cdEmoji = songBtn.querySelector(".cd-emoji");
+  cdEmoji.classList.add("rotating");
+
+  // Use the journal text to generate a song recommendation
+  const journalContent = journalText.value.trim();
+  if (!journalContent) {
+    alert("Please write something first.");
+    cdEmoji.classList.remove("rotating");
+    return;
+  }
+  
+  const prompt = `
+    Based on the following journal entry, suggest a song that best captures its mood and tone.
+    Provide the song title and artist in the format "Song Title" by Artist.
+    Journal entry: "${journalContent}"
+  `;
+  
+  const messages = [
+    { role: "system", content: "You are a helpful music recommendation assistant." },
+    { role: "user", content: prompt }
+  ];
+  
+  const aiResponse = await callOpenAI(messages);
+  cdEmoji.classList.remove("rotating");
+  
+  if (!aiResponse) {
+    alert("No response from OpenAI. Check your API key or console for errors.");
+    return;
+  }
+  
+  const recommendedSong = aiResponse.trim();
+  
+  // Create a Spotify search URL for the recommended song
+  const searchUrl = "https://open.spotify.com/search/" + encodeURIComponent(recommendedSong);
+  
+  // Build the song card HTML
+  songRecommendationEl.innerHTML = `
+    <a href="${searchUrl}" target="_blank" style="text-decoration: none;">
+      <div class="song-card">
+        <span class="cd-emoji">💿</span>
+        <span class="song-text">${recommendedSong}</span>
+      </div>
+    </a>
+  `;
+});

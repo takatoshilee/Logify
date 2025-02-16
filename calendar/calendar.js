@@ -91,20 +91,18 @@ function getDailyMoodAverages() {
  * For scores 51-100: interpolates from yellow to blue.
  */
 function getMoodColor(score) {
-  // Ensure the score is between 1 and 100
+  // Clamp the score between 1 and 100
   score = Math.max(1, Math.min(100, score));
-
-  if (score <= 50) {
-    const ratio = (score - 1) / 49; // 0 to 1
-    const green = Math.round(255 * ratio);
-    return `rgb(255, ${green}, 0)`; // red to yellow
-  } else {
-    const ratio = (score - 50) / 50; // 0 to 1
-    const red = Math.round(255 * (1 - ratio));
-    const green = Math.round(255 * (1 - ratio));
-    const blue = Math.round(255 * ratio);
-    return `rgb(${red}, ${green}, ${blue})`; // yellow to blue
-  }
+  
+  // Calculate the ratio between 0 and 1
+  const ratio = (score - 1) / 99;
+  
+  // Interpolate: 1 → red (255,0,0) and 100 → green (0,255,0)
+  const red = Math.round(255 * (1 - ratio));
+  const green = Math.round(255 * ratio);
+  const alpha = 0.7; // lower opacity
+  
+  return `rgba(${red}, ${green}, 0, ${alpha})`;
 }
 
 /**
