@@ -1,8 +1,8 @@
 // spotifyToken.js
 
 async function getSpotifyAccessToken() {
-    const clientId = 'e3e6521273a74ae1a4652177816b5548';       // Your Client ID
-    const clientSecret = '16fd05f7b0e648c9b01238303b2b748f';    // Your Client Secret
+    const clientId = 'YOUR_CLIENT_ID';       // Your Client ID
+    const clientSecret = 'YOUR_CLIENT_SECRET';    // Your Client Secret
     const tokenUrl = 'https://accounts.spotify.com/api/token';
   
     const response = await fetch(tokenUrl, {

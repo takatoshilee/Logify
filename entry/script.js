@@ -304,7 +304,7 @@ saveEntryBtn.addEventListener("click", () => {
 
 
 
-const spotifyAccessToken = "BQDSAr2jG-Wtakrf1uFQSAP6GbHxRud7uF-bbyfTLXnqgoD0DWmvufRcPLHrQQCIl56cyXJOhMHv1X13lPjq5wjAL5bP7JYtS10Ucb8Tv5UoXgK8gafx_EbLbkEpV8ckfZhgx21HfSU"
+const spotifyAccessToken = "YOUR_ACCESS_TOKEN";
 
 const songBtn = document.getElementById("songBtn");
 const songRecommendationEl = document.getElementById("songRecommendation");
